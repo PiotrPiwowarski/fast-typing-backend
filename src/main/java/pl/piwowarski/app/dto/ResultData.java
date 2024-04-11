@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResultData {
 
-    private int correctWords;
-    private int incorrectWords;
-    private int correctCharacters;
-    private int incorrectCharacters;
-    private int accuracy;
+    private double correctWords;
+    private double incorrectWords;
+    private double accuracy;
 }

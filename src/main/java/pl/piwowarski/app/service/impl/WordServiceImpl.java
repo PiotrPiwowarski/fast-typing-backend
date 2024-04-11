@@ -39,62 +39,28 @@ public class WordServiceImpl implements WordService {
     public ResultData verification(DataToVerificationDto dataToVerificationDto) {
         String[] textToVerification = dataToVerificationDto.getTextToVerification().split(" ");
         String[] pattern = dataToVerificationDto.getPattern().split(" ");
-        return wrongWordsCounter(textToVerification, pattern);
+        return prepareResultData(textToVerification, pattern);
     }
     
-    private ResultData wrongWordsCounter(String[] textToVerification, String[] pattern) {
-        int incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
-        int correctWordsCounter = 0;
-        int incorrectCharactersCounter = 0;
-        int correctCharactersCounter = 0;
+    private ResultData prepareResultData(String[] textToVerification, String[] pattern) {
         if(textToVerification.length > pattern.length) {
-            for (int i = 0; i < pattern.length; i++) {
-				incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
-                correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
-                incorrectCharactersCounter += incorrectCharactersCounter(textToVerification[i].split(""), pattern[i].split(""));
-                correctCharactersCounter += correctCharactersCounter(textToVerification[i].split(""), pattern[i].split(""));
-            }
+            return countResultData(pattern.length, textToVerification, pattern);
         } else {
-            for (int i = 0; i < textToVerification.length; i++) {
-                incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
-                correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
-                incorrectCharactersCounter += incorrectCharactersCounter(textToVerification[i].split(""), pattern[i].split(""));
-                correctCharactersCounter += correctCharactersCounter(textToVerification[i].split(""), pattern[i].split(""));
-            }
+            return countResultData(textToVerification.length, textToVerification, pattern);
+        }
+    }
+
+    private ResultData countResultData(int size, String[] textToVerification, String[] pattern) {
+        double incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
+        double correctWordsCounter = 0;
+        for (int i = 0; i < size; i++) {
+            incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
+            correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
         }
         return ResultData.builder()
                 .incorrectWords(incorrectWordsCounter)
                 .correctWords(correctWordsCounter)
-                .incorrectCharacters(incorrectCharactersCounter)
-                .correctCharacters(correctCharactersCounter)
+                .accuracy(Math.round((correctWordsCounter / (correctWordsCounter + incorrectWordsCounter)) * 100.0))
                 .build();
-    }
-
-    private int incorrectCharactersCounter(String[] toVerification, String[] pattern) {
-        int wrongLettersCounter = 0;
-        if(toVerification.length > pattern.length) {
-            for (int i = 0; i < pattern.length; i++) {
-                wrongLettersCounter += toVerification[i].equals(pattern[i]) ? 0 : 1;
-            }
-        } else {
-            for (int i = 0; i < toVerification.length; i++) {
-                wrongLettersCounter += toVerification[i].equals(pattern[i]) ? 0 : 1;
-            }
-        }
-        return wrongLettersCounter;
-    }
-
-    private int correctCharactersCounter(String[] toVerification, String[] pattern) {
-        int correctCharactersCounter = 0;
-        if(toVerification.length > pattern.length) {
-            for (int i = 0; i < pattern.length; i++) {
-                correctCharactersCounter += toVerification[i].equals(pattern[i]) ? 1 : 0;
-            }
-        } else {
-            for (int i = 0; i < toVerification.length; i++) {
-                correctCharactersCounter += toVerification[i].equals(pattern[i]) ? 1 : 0;
-            }
-        }
-        return correctCharactersCounter;
     }
 }
