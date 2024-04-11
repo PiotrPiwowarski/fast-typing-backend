@@ -4,26 +4,28 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.piwowarski.app.dto.DataToVerificationDto;
+import pl.piwowarski.app.dto.ResultData;
 import pl.piwowarski.app.service.WordService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sentence")
+@RequestMapping("/api/wordsList")
 public class WordController {
 
     private final WordService wordService;
 
     @GetMapping
-    public ResponseEntity<List<String>> getRandomSentence() {
-        List<String> words = wordService.getRandomWordsList();
-		return new ResponseEntity<>(words, HttpStatus.OK);
+    public ResponseEntity<List<String>> getRandomWordsList(@RequestParam("words") int words) {
+        List<String> wordsList = wordService.getRandomWordsList(words);
+		return new ResponseEntity<>(wordsList, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> verifySentence(@RequestBody String sentenceToVerification) {
-        boolean result = wordService.verifySentence(sentenceToVerification);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<ResultData> verification(@RequestBody DataToVerificationDto dataToVerificationDto) {
+        ResultData resultData = wordService.verification(dataToVerificationDto);
+        return new ResponseEntity<>(resultData, HttpStatus.OK);
     }
 }

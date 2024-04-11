@@ -1,13 +1,15 @@
 package pl.piwowarski.app.service;
 
 import org.springframework.stereotype.Service;
+import pl.piwowarski.app.dto.DataToVerificationDto;
+import pl.piwowarski.app.dto.ResultData;
 
 import java.util.List;
 
 @Service
 public interface WordService {
 
-    List<String> getRandomWordsList();
+    List<String> getRandomWordsList(int numberOfWords);
 
-    boolean verifySentence(String sentenceToVerification);
+    ResultData verification(DataToVerificationDto dataToVerificationDto);
 }

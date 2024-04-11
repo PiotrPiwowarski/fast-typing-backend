@@ -13,6 +13,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "words")
 public class Word {
 
     @Id
