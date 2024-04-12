@@ -18,8 +18,9 @@ public class WordController {
     private final WordService wordService;
 
     @GetMapping
-    public ResponseEntity<List<String>> getRandomWordsList(@RequestParam("words") int words) {
-        List<String> wordsList = wordService.getRandomWordsList(words);
+    public ResponseEntity<List<String>> getRandomWordsList(@RequestParam(name = "words", defaultValue = "10") String words) {
+        int numberOfWords = Integer.parseInt(words);
+        List<String> wordsList = wordService.getRandomWordsList(numberOfWords);
 		return new ResponseEntity<>(wordsList, HttpStatus.OK);
     }
 

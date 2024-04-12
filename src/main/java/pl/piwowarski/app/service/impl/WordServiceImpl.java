@@ -27,7 +27,7 @@ public class WordServiceImpl implements WordService {
         int numberOfWordsInDatabase = wordRepository.countNumberOfWords();
         for (int i = 0; i < numberOfWords; i++) {
             String randomWord = wordRepository
-                    .findById(random.nextLong(numberOfWordsInDatabase))
+                    .findById(random.nextLong(1, numberOfWordsInDatabase))
                     .orElseThrow(() -> new NoWordsWithSuchId(NO_WORDS_WITH_SUCH_ID))
                     .getWord();
             wordsList.add(randomWord);
