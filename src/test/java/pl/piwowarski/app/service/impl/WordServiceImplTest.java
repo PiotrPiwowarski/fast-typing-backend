@@ -1,10 +1,9 @@
 package pl.piwowarski.app.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.piwowarski.app.dto.DataToVerificationDto;
-import pl.piwowarski.app.dto.ResultData;
+import pl.piwowarski.app.dto.ResultDto;
 import pl.piwowarski.app.entity.Word;
 import pl.piwowarski.app.repository.WordRepository;
 import pl.piwowarski.app.service.WordService;
@@ -21,8 +20,7 @@ import static org.mockito.Mockito.*;
 public class WordServiceImplTest {
 
     private final List<Word> words = new ArrayList<>(List.of(
-            new Word(1L, "word1"),
-            new Word(2L, "word2")
+            new Word(1L, "word1")
     ));
 
     @Test
@@ -30,12 +28,11 @@ public class WordServiceImplTest {
         WordRepository wordRepository = mock(WordRepository.class);
 
         when(wordRepository.findById(1L)).thenReturn(Optional.of(words.get(0)));
-        when(wordRepository.findById(2L)).thenReturn(Optional.of(words.get(1)));
         when(wordRepository.countNumberOfWords()).thenReturn(2);
 
         WordService wordService = new WordServiceImpl(wordRepository, new Random());
 
-        assertEquals(10, wordService.getRandomWordsList(10).size());
+        assertEquals("word1 word1 word1 word1", wordService.getRandomText(4));
     }
 
     @Test
@@ -46,6 +43,6 @@ public class WordServiceImplTest {
 
         assertEquals(
                 wordService.verification(new DataToVerificationDto("Ala ma kota", "Ala ma kota")),
-                new ResultData(3.0, 0, 100.0));
+                new ResultDto(3.0, 0, 100.0));
     }
 }
