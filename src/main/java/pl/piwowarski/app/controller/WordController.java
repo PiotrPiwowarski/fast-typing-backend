@@ -18,8 +18,6 @@ public class WordController {
 
     private final WordService wordService;
 
-    @Operation(summary = "Getting text of a given length.",
-            description = "Set request param 'length' value to customize text length else length is default 10.")
     @GetMapping
     public ResponseEntity<TextDto> getRandomText(@RequestParam(name = "length", defaultValue = "10") String length) {
         String text = wordService.getRandomText(Integer.parseInt(length));
@@ -27,8 +25,6 @@ public class WordController {
 		return new ResponseEntity<>(textDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Data statistics.",
-            description = "Required request body containing: user text, pattern text and time.")
     @PostMapping
     public ResponseEntity<ResultDto> statistics(@RequestBody DataToVerificationDto dataToVerificationDto) {
         ResultDto resultDto = wordService.verification(dataToVerificationDto);
