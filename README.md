@@ -7,14 +7,6 @@ This project only contains api of the application, frontend is in a separate pro
 
 `https://github.com/PiotrPiwowarski/fast-typing-fontend`
 
-## Application Interface
-
-![006878C1-0625-462C-AC57-858A336ADE21.png](..%2F..%2F..%2FPictures%2FPhotos%20Library.photoslibrary%2Foriginals%2F0%2F006878C1-0625-462C-AC57-858A336ADE21.png)
-
-![6E8187F0-5657-4F83-9803-EB293102723A.png](..%2F..%2F..%2FPictures%2FPhotos%20Library.photoslibrary%2Foriginals%2F6%2F6E8187F0-5657-4F83-9803-EB293102723A.png)
-
-![A76A5E30-AB37-4642-A06A-6B7FD9CAAE59.png](..%2F..%2F..%2FPictures%2FPhotos%20Library.photoslibrary%2Foriginals%2FA%2FA76A5E30-AB37-4642-A06A-6B7FD9CAAE59.png)
-
 ## Technologies
 This Rest API is created using these technologies:
 * Java, version: 22
@@ -40,7 +32,7 @@ There are two .sql files in `src/main/resources`:
 * You can specify length of text using request param `length` 
 * It returns object containing following property: `patternText` 
 
-### Statistics
+### Get Statistics
 * This functionality is available using HTTP method `POST` under the endpoint: `/api/text`
 * It requires request body containing following properties:  `userText`, `patternText` and `time`
 * It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`

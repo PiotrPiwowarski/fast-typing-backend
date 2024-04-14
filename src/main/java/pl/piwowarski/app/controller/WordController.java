@@ -25,7 +25,7 @@ public class WordController {
     }
 
     @PostMapping
-    public ResponseEntity<ResultDto> statistics(@RequestBody DataToVerificationDto dataToVerificationDto) {
+    public ResponseEntity<ResultDto> getStatistics(@RequestBody DataToVerificationDto dataToVerificationDto) {
         ResultDto resultDto = wordService.verification(dataToVerificationDto);
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
