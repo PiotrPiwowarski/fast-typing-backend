@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TextDto {
 
-    private String text;
+    private String patternText;
 }

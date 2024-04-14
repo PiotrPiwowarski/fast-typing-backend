@@ -36,30 +36,38 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public ResultDto verification(DataToVerificationDto dataToVerificationDto) {
-        String[] textToVerification = dataToVerificationDto.getTextToVerification().split(" ");
-        String[] pattern = dataToVerificationDto.getPattern().split(" ");
-        return prepareResultData(textToVerification, pattern);
+        String[] textToVerification = dataToVerificationDto.getUserText().split(" ");
+        String[] pattern = dataToVerificationDto.getPatternText().split(" ");
+        int time = dataToVerificationDto.getTime();
+        return prepareResultData(textToVerification, pattern, time);
     }
     
-    private ResultDto prepareResultData(String[] textToVerification, String[] pattern) {
+    private ResultDto prepareResultData(String[] textToVerification, String[] pattern, int time) {
         if(textToVerification.length > pattern.length) {
-            return countResultData(pattern.length, textToVerification, pattern);
+            return countResultData(pattern.length, textToVerification, pattern, time);
         } else {
-            return countResultData(textToVerification.length, textToVerification, pattern);
+            return countResultData(textToVerification.length, textToVerification, pattern, time);
         }
     }
 
-    private ResultDto countResultData(int size, String[] textToVerification, String[] pattern) {
+    private ResultDto countResultData(int size, String[] textToVerification, String[] pattern, int time) {
         double incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
         double correctWordsCounter = 0;
         for (int i = 0; i < size; i++) {
             incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
             correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
         }
+        time = (int) Math.round((time/1000.0));
+        int wordsPerMinute = 0;
+        if(textToVerification.length == pattern.length) {
+			wordsPerMinute = (60 * textToVerification.length) / time;
+        }
         return ResultDto.builder()
                 .incorrectWords(incorrectWordsCounter)
                 .correctWords(correctWordsCounter)
                 .accuracy(Math.round((correctWordsCounter / (correctWordsCounter + incorrectWordsCounter)) * 100.0))
+                .time(time)
+                .wordsPerMinute(wordsPerMinute)
                 .build();
     }
 }

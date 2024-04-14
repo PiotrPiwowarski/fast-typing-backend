@@ -14,4 +14,6 @@ public class ResultDto {
     private double correctWords;
     private double incorrectWords;
     private double accuracy;
+    private int time;
+    private int wordsPerMinute;
 }

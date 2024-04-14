@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DataToVerificationDto {
 
-    private String textToVerification;
-    private String pattern;
+    private String userText;
+    private String patternText;
+    private int time;
 }
