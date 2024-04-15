@@ -13,7 +13,7 @@ https://github.com/PiotrPiwowarski/fast-typing-fontend
 This Rest API is created using following technologies:
 * Java, version: 22
 * Spring Boot, version: 3.2.4
-* Spring data, version: suitable for version Spring Boot
+* Spring data, version: suitable for Spring Boot version
 * H2 database, version: 2.2.224
 * Lombok, version: 1.18.32
 * JUnit, version: 5.10.2
