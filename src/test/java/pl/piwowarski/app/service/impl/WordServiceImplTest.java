@@ -42,7 +42,7 @@ public class WordServiceImplTest {
         WordService wordService = new WordServiceImpl(wordRepository, new Random());
 
         assertEquals(
-                wordService.verification(new DataToVerificationDto("Ala ma kota", "Ala ma kota")),
-                new ResultDto(3.0, 0, 100.0));
+                wordService.verification(new DataToVerificationDto("Ala ma kota", "Ala ma kota", 10000)),
+                new ResultDto(3, 0, 100.0, 10, 18));
     }
 }

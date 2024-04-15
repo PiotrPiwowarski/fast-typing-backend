@@ -51,21 +51,23 @@ public class WordServiceImpl implements WordService {
     }
 
     private ResultDto countResultData(int size, String[] textToVerification, String[] pattern, int time) {
-        double incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
-        double correctWordsCounter = 0;
+        int incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
+        int correctWordsCounter = 0;
         for (int i = 0; i < size; i++) {
             incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
             correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
         }
         time = (int) Math.round((time/1000.0));
         int wordsPerMinute = 0;
-        if(textToVerification.length == pattern.length) {
+        if(textToVerification.length < pattern.length) {
 			wordsPerMinute = (60 * textToVerification.length) / time;
+        } else {
+            wordsPerMinute = (60 * pattern.length) / time;
         }
         return ResultDto.builder()
                 .incorrectWords(incorrectWordsCounter)
                 .correctWords(correctWordsCounter)
-                .accuracy(Math.round((correctWordsCounter / (correctWordsCounter + incorrectWordsCounter)) * 100.0))
+                .accuracy(Math.round(((double) correctWordsCounter / (correctWordsCounter + incorrectWordsCounter)) * 100.0))
                 .time(time)
                 .wordsPerMinute(wordsPerMinute)
                 .build();

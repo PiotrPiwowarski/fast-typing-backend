@@ -1,0 +1,25 @@
+version: "3.0"
+services:
+
+  api:
+    container_name: fast-typing-app-api
+    image: piotrpiw/fast-typing-app-api:1.0
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - fast-typing-app-net
+
+  frontend:
+    container_name: fast-typing-app-frontend
+    image: piotrpiw/fast-typing-app-frontend:1.0
+    ports:
+      - "3000:3000"
+    networks:
+      - fast-typing-app-net
+    depends_on:
+      - api
+
+networks:
+  fast-typing-app-net:
+    driver: bridge

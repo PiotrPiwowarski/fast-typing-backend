@@ -8,6 +8,7 @@ class FastTypingBackendApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

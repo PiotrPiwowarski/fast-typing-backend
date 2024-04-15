@@ -28,11 +28,19 @@ There are two .sql files in `src/main/resources`:
 
 ## Functionalities
 ### Get Random Text
+* It returns random text
 * This functionality is available using HTTP method `GET` under the endpoint: `/api/text`
 * You can specify length of text using request param `length` 
 * It returns object containing following property: `patternText` 
 
 ### Get Statistics
+* It returns statistics on correct words, incorrect words, accuracy, game duration, typing speed (words per minute)
 * This functionality is available using HTTP method `POST` under the endpoint: `/api/text`
 * It requires request body object containing following properties:  `userText`, `patternText` and `time`
-* It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`   
+* It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`
+
+## Running the application
+### Using Docker
+1. Go to the main application folder 
+2. Use following command in terminal `docker compose up`
+3. Open `http://localhost:3000` in your browser
