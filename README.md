@@ -5,7 +5,9 @@ and as fast as possible. After rewriting the text, user can check statistics.
 ## Introduction
 This project only contains API of the application, frontend is in a separate project on GitHub, link below:
 
-`https://github.com/PiotrPiwowarski/fast-typing-fontend`
+```
+https://github.com/PiotrPiwowarski/fast-typing-fontend
+```
 
 ## Technologies
 This Rest API is created using following technologies:
@@ -34,7 +36,7 @@ There are two .sql files in `src/main/resources`:
 * It returns object containing following property: `patternText` 
 
 ### Get Statistics
-* It returns statistics on correct words, incorrect words, accuracy, game duration, typing speed (words per minute)
+* It returns statistics on correct words, incorrect words, accuracy, game duration, typing speed
 * This functionality is available using HTTP method `POST` under the endpoint: `/api/text`
 * It requires request body object containing following properties:  `userText`, `patternText` and `time`
 * It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`
@@ -42,5 +44,14 @@ There are two .sql files in `src/main/resources`:
 ## Running the application
 ### Using Docker
 1. Go to the main application folder 
-2. Use following command in terminal `docker compose up`
-3. Open `http://localhost:3000` in your browser
+2. Use following command in terminal:
+
+```
+docker compose up
+```
+
+4. Use following URL in your browser:
+
+```
+http://localhost:3000
+```
