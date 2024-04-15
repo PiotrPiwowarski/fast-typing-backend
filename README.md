@@ -3,12 +3,12 @@ This app helps user to improve his typing skills. User selects length of text an
 and as fast as possible. After rewriting the text, user can check statistics.
 
 ## Introduction
-This project only contains api of the application, frontend is in a separate project on GitHub, link below:
+This project only contains API of the application, frontend is in a separate project on GitHub, link below:
 
 `https://github.com/PiotrPiwowarski/fast-typing-fontend`
 
 ## Technologies
-This Rest API is created using these technologies:
+This Rest API is created using following technologies:
 * Java, version: 22
 * Spring Boot, version: 3.2.4
 * Spring data, version: suitable for version Spring Boot
@@ -34,5 +34,5 @@ There are two .sql files in `src/main/resources`:
 
 ### Get Statistics
 * This functionality is available using HTTP method `POST` under the endpoint: `/api/text`
-* It requires request body containing following properties:  `userText`, `patternText` and `time`
-* It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`
+* It requires request body object containing following properties:  `userText`, `patternText` and `time`
+* It returns object containing following properties: `correctWords`, `incorrectWords`, `accuracy`, `time`, `wordsPerMinute`   
