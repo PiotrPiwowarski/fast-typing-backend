@@ -23,24 +23,19 @@ public class WordServiceImplTest {
             new Word(1L, "word1")
     ));
 
+    private final WordRepository wordRepository = mock(WordRepository.class);
+    private final WordService wordService = new WordServiceImpl(wordRepository, new Random());
+
     @Test
     public void getRandomWordsListTest() {
-        WordRepository wordRepository = mock(WordRepository.class);
-
         when(wordRepository.findById(1L)).thenReturn(Optional.of(words.get(0)));
         when(wordRepository.countNumberOfWords()).thenReturn(2);
-
-        WordService wordService = new WordServiceImpl(wordRepository, new Random());
 
         assertEquals("word1 word1 word1 word1", wordService.getRandomText(4));
     }
 
     @Test
     public void verificationTest() {
-        WordRepository wordRepository = mock(WordRepository.class);
-
-        WordService wordService = new WordServiceImpl(wordRepository, new Random());
-
         assertEquals(
                 wordService.verification(new DataToVerificationDto("Ala ma kota", "Ala ma kota", 10000)),
                 new ResultDto(3, 0, 100.0, 10, 18));
