@@ -11,18 +11,18 @@ https://github.com/PiotrPiwowarski/fast-typing-fontend
 
 ## Technologies
 This Rest API is created using following technologies:
-* Java, version: 22
-* Spring Boot, version: 3.2.4
-* Spring data, version: suitable for Spring Boot version
-* H2 database, version: 2.2.224
-* Lombok, version: 1.18.32
-* JUnit, version: 5.10.2
-* Mockito, version: 5.11.0
+* Java 17
+* Spring Boot
+* Spring data
+* H2 database
+* Lombok
+* JUnit
+* Mockito
 
 ## Database
 * H2
 
-I decided to use H2 database that only runs at runtime. This solution is sufficient for this project.
+I decided to use H2 database that only runs at runtime. This solution is sufficient for purposes of demonstration.
 
 There are two .sql files in `src/main/resources`:
 * `schema.sql` - it is used to build the database in runtime
@@ -50,7 +50,7 @@ There are two .sql files in `src/main/resources`:
 docker compose up
 ```
 
-4. Use following URL in your browser:
+3. Use following URL in your browser:
 
 ```
 http://localhost:3000
