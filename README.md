@@ -25,7 +25,7 @@ This Rest API is created using following technologies:
 I decided to use H2 database that only runs at runtime. This solution is sufficient for purposes of demonstration.
 
 There are two .sql files in `src/main/resources`:
-* `schema.sql` - it is used to build the database in runtime
+* `schema.sql` - it is used to build the database at runtime
 * `data.sql` - it fills the database with data
 
 ## Functionalities
