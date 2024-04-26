@@ -2,8 +2,8 @@ version: "3.0"
 services:
 
   api:
-    container_name: fast-typing-app-api
-    image: piotrpiw/fast-typing-app-api:1.0
+    container_name: fast-typing-app-backend
+    image: piotrpiw/fast-typing-app-backend:1.0
     build: .
     ports:
       - "8080:8080"
