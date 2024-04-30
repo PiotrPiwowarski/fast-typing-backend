@@ -8,8 +8,6 @@ import pl.piwowarski.app.exceptions.NoWordsWithSuchId;
 import pl.piwowarski.app.repository.WordRepository;
 import pl.piwowarski.app.service.WordService;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Random;
 import java.util.StringJoiner;
 
@@ -28,7 +26,7 @@ public class WordServiceImpl implements WordService {
         int numberOfWordsInDatabase = wordRepository.countNumberOfWords();
         for (int i = 0; i < numberOfWords; i++) {
             String randomWord = wordRepository
-                    .findById(random.nextLong(1, numberOfWordsInDatabase))
+                    .findById(random.nextLong(1, numberOfWordsInDatabase + 1))
                     .orElseThrow(() -> new NoWordsWithSuchId(NO_WORDS_WITH_SUCH_ID))
                     .getWord();
             text.add(randomWord);
@@ -39,12 +37,13 @@ public class WordServiceImpl implements WordService {
     @Override
     public ResultDto getStatistics(DataToVerificationDto dataToVerificationDto) {
         int mistakes = Math.abs(dataToVerificationDto.getPatternText().length() - dataToVerificationDto.getUserText().length());
+        int properLength;
 
         if(dataToVerificationDto.getPatternText().length() > dataToVerificationDto.getUserText().length()) {
-            int properLength = dataToVerificationDto.getPatternText().length();
+            properLength = dataToVerificationDto.getPatternText().length();
             mistakes += countMistakes(properLength, dataToVerificationDto);
         } else {
-            int properLength = dataToVerificationDto.getUserText().length();
+            properLength = dataToVerificationDto.getUserText().length();
             mistakes += countMistakes(properLength, dataToVerificationDto);
         }
         return createResultStatistics(mistakes,
@@ -70,7 +69,7 @@ public class WordServiceImpl implements WordService {
         return ResultDto.builder()
                 .time(timeInSeconds)
                 .wordsPerMinute(wordsPerMinute(words, timeInSeconds))
-                .lettersPerMinute(lettersPerMinute(letters, timeInSeconds))
+                .keystrokesPerMinute(lettersPerMinute(letters, timeInSeconds))
                 .accuracy(accuracy(mistakes, letters))
                 .build();
     }

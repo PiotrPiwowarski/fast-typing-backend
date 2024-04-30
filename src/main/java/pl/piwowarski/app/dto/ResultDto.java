@@ -13,6 +13,6 @@ public class ResultDto {
 
     private double time;
     private double wordsPerMinute;
-    private double lettersPerMinute;
+    private double keystrokesPerMinute;
     private double accuracy;
 }
