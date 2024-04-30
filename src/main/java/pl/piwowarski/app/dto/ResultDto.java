@@ -11,9 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResultDto {
 
-    private int correctWords;
-    private int incorrectWords;
+    private double time;
+    private double wordsPerMinute;
+    private double lettersPerMinute;
     private double accuracy;
-    private int time;
-    private int wordsPerMinute;
 }

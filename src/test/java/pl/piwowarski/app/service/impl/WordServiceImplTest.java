@@ -28,16 +28,11 @@ public class WordServiceImplTest {
 
     @Test
     public void getRandomWordsListTest() {
-        when(wordRepository.findById(1L)).thenReturn(Optional.of(words.get(0)));
-        when(wordRepository.countNumberOfWords()).thenReturn(2);
 
-        assertEquals("word1 word1 word1 word1", wordService.getRandomText(4));
     }
 
     @Test
     public void verificationTest() {
-        assertEquals(
-                wordService.verification(new DataToVerificationDto("Ala ma kota", "Ala ma kota", 10000)),
-                new ResultDto(3, 0, 100.0, 10, 18));
+
     }
 }

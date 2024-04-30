@@ -9,5 +9,5 @@ public interface WordService {
 
     String getRandomText(int numberOfWords);
 
-    ResultDto verification(DataToVerificationDto dataToVerificationDto);
+    ResultDto getStatistics(DataToVerificationDto dataToVerificationDto);
 }

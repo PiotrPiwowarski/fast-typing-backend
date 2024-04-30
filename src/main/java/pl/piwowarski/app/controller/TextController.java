@@ -13,20 +13,20 @@ import pl.piwowarski.app.service.WordService;
 @RequiredArgsConstructor
 @RequestMapping("/api/text")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class WordController {
+public class TextController {
 
     private final WordService wordService;
 
     @GetMapping
-    public ResponseEntity<TextDto> getRandomText(@RequestParam(name = "length", defaultValue = "10") String length) {
-        String text = wordService.getRandomText(Integer.parseInt(length));
+    public ResponseEntity<TextDto> getRandomText(@RequestParam(name = "numberOfWords", defaultValue = "10") int numberOfWords) {
+        String text = wordService.getRandomText(numberOfWords);
         TextDto textDto = TextDto.builder().patternText(text).build();
 		return new ResponseEntity<>(textDto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<ResultDto> getStatistics(@RequestBody DataToVerificationDto dataToVerificationDto) {
-        ResultDto resultDto = wordService.verification(dataToVerificationDto);
+        ResultDto resultDto = wordService.getStatistics(dataToVerificationDto);
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
 }

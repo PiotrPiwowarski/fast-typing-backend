@@ -8,6 +8,8 @@ import pl.piwowarski.app.exceptions.NoWordsWithSuchId;
 import pl.piwowarski.app.repository.WordRepository;
 import pl.piwowarski.app.service.WordService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 import java.util.StringJoiner;
 
@@ -35,41 +37,54 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public ResultDto verification(DataToVerificationDto dataToVerificationDto) {
-        String[] textToVerification = dataToVerificationDto.getUserText().split(" ");
-        String[] pattern = dataToVerificationDto.getPatternText().split(" ");
-        int time = dataToVerificationDto.getTime();
-        return prepareResultData(textToVerification, pattern, time);
-    }
-    
-    private ResultDto prepareResultData(String[] textToVerification, String[] pattern, int time) {
-        if(textToVerification.length > pattern.length) {
-            return countResultData(pattern.length, textToVerification, pattern, time);
+    public ResultDto getStatistics(DataToVerificationDto dataToVerificationDto) {
+        int mistakes = Math.abs(dataToVerificationDto.getPatternText().length() - dataToVerificationDto.getUserText().length());
+
+        if(dataToVerificationDto.getPatternText().length() > dataToVerificationDto.getUserText().length()) {
+            int properLength = dataToVerificationDto.getPatternText().length();
+            mistakes += countMistakes(properLength, dataToVerificationDto);
         } else {
-            return countResultData(textToVerification.length, textToVerification, pattern, time);
+            int properLength = dataToVerificationDto.getUserText().length();
+            mistakes += countMistakes(properLength, dataToVerificationDto);
         }
+        return createResultStatistics(mistakes,
+                dataToVerificationDto.getUserText().split("").length,
+                dataToVerificationDto.getTime(),
+                dataToVerificationDto.getUserText().split(" ").length);
     }
 
-    private ResultDto countResultData(int size, String[] textToVerification, String[] pattern, int time) {
-        int incorrectWordsCounter = Math.abs(pattern.length - textToVerification.length);
-        int correctWordsCounter = 0;
-        for (int i = 0; i < size; i++) {
-            incorrectWordsCounter += textToVerification[i].equals(pattern[i]) ? 0 : 1;
-            correctWordsCounter += textToVerification[i].equals(pattern[i]) ? 1 : 0;
+    private int countMistakes(int properLength, DataToVerificationDto dataToVerificationDto) {
+        int countMistakes = 0;
+        String[] userText = dataToVerificationDto.getUserText().split("");
+        String[] patternText = dataToVerificationDto.getPatternText().split("");
+        for(int i = 0; i < properLength; i++) {
+            if(i < userText.length && i < patternText.length && !userText[i].equals(patternText[i])) {
+                countMistakes++;
+            }
         }
-        time = (int) Math.round((time/1000.0));
-        int wordsPerMinute = 0;
-        if(textToVerification.length < pattern.length) {
-			wordsPerMinute = (60 * textToVerification.length) / time;
-        } else {
-            wordsPerMinute = (60 * pattern.length) / time;
-        }
+        return countMistakes;
+    }
+
+    private ResultDto createResultStatistics(int mistakes, int letters, int time, int words) {
+        double timeInSeconds = (double) time /1000;
         return ResultDto.builder()
-                .incorrectWords(incorrectWordsCounter)
-                .correctWords(correctWordsCounter)
-                .accuracy(Math.round(((double) correctWordsCounter / (correctWordsCounter + incorrectWordsCounter)) * 100.0))
-                .time(time)
-                .wordsPerMinute(wordsPerMinute)
+                .time(timeInSeconds)
+                .wordsPerMinute(wordsPerMinute(words, timeInSeconds))
+                .lettersPerMinute(lettersPerMinute(letters, timeInSeconds))
+                .accuracy(accuracy(mistakes, letters))
                 .build();
+    }
+
+    private double wordsPerMinute(int words, double time) {
+        return words * 60 / time;
+    }
+
+    private double lettersPerMinute(int letters, double time) {
+        return letters * 60 /time;
+    }
+
+    private double accuracy(int mistakes, int letters) {
+        double result = 100 - ((double) mistakes * 100 / letters);
+        return result < 0 ? 0 : result;
     }
 }
